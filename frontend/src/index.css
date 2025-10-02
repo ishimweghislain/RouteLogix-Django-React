@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Leaflet CSS fixes */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+/* Custom styles */
+.log-grid {
+  display: grid;
+  grid-template-columns: repeat(96, minmax(0, 1fr));
+  gap: 1px;
+  background-color: #e5e7eb;
+  padding: 2px;
+  border-radius: 4px;
+}
+
+.log-slot {
+  height: 20px;
+  border-radius: 2px;
+}
+
+.log-slot.off-duty {
+  background-color: #f3f4f6;
+}
+
+.log-slot.sleeper {
+  background-color: #ddd6fe;
+}
+
+.log-slot.driving {
+  background-color: #fecaca;
+}
+
+.log-slot.on-duty {
+  background-color: #fde68a;
+}
