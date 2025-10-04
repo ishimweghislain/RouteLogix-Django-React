@@ -1,0 +1,127 @@
+INFO 2025-10-04 20:00:49,094 autoreload 22144 12480 Watching for file changes with StatReloader
+INFO 2025-10-04 20:02:54,189 basehttp 22144 16032 "OPTIONS /api/trip/plan/ HTTP/1.1" 200 0
+WARNING 2025-10-04 20:02:54,952 log 22144 16032 Not Found: /api/trip/plan/
+WARNING 2025-10-04 20:02:54,954 basehttp 22144 16032 "POST /api/trip/plan/ HTTP/1.1" 404 2713
+WARNING 2025-10-04 20:04:05,854 log 22144 7792 Not Found: /
+WARNING 2025-10-04 20:04:05,855 basehttp 22144 7792 "GET / HTTP/1.1" 404 2946
+WARNING 2025-10-04 20:04:13,673 log 22144 10932 Not Found: /favicon.ico
+WARNING 2025-10-04 20:04:13,674 basehttp 22144 10932 "GET /favicon.ico HTTP/1.1" 404 2997
+INFO 2025-10-04 20:04:49,057 basehttp 22144 24688 "GET /admin HTTP/1.1" 301 0
+INFO 2025-10-04 20:04:49,086 basehttp 22144 21820 "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-10-04 20:04:49,690 basehttp 22144 21820 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4173
+INFO 2025-10-04 20:04:51,159 basehttp 22144 23464 "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+INFO 2025-10-04 20:04:51,308 basehttp 22144 21820 "GET /static/admin/css/base.css HTTP/1.1" 200 22120
+INFO 2025-10-04 20:04:51,490 basehttp 22144 27576 "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2808
+INFO 2025-10-04 20:04:51,671 basehttp 22144 21560 "GET /static/admin/css/login.css HTTP/1.1" 200 951
+INFO 2025-10-04 20:04:52,368 basehttp 22144 24580 "GET /static/admin/css/responsive.css HTTP/1.1" 200 16565
+INFO 2025-10-04 20:04:52,700 basehttp 22144 10988 "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+INFO 2025-10-04 20:04:52,715 basehttp 22144 24580 "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-10-04 20:05:13,731 basehttp 22144 19528 "POST /admin/login/?next=/admin/ HTTP/1.1" 200 4366
+WARNING 2025-10-04 20:07:43,550 log 22144 16612 Not Found: /api/trip/plan/
+WARNING 2025-10-04 20:07:43,551 basehttp 22144 16612 "POST /api/trip/plan/ HTTP/1.1" 404 2713
+WARNING 2025-10-04 20:08:07,570 log 22144 16608 Not Found: /api/trip/plan/
+WARNING 2025-10-04 20:08:07,571 basehttp 22144 16608 "GET /api/trip/plan/ HTTP/1.1" 404 2712
+WARNING 2025-10-04 20:08:11,272 log 22144 16608 Not Found: /favicon.ico
+WARNING 2025-10-04 20:08:11,273 basehttp 22144 16608 "GET /favicon.ico HTTP/1.1" 404 2997
+INFO 2025-10-04 20:14:39,087 autoreload 22144 12480 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\apps\trips\urls.py changed, reloading.
+INFO 2025-10-04 20:14:43,417 autoreload 13284 26448 Watching for file changes with StatReloader
+INFO 2025-10-04 20:14:51,127 autoreload 13284 26448 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\apps\trips\views.py changed, reloading.
+INFO 2025-10-04 20:14:54,896 autoreload 11300 18344 Watching for file changes with StatReloader
+ERROR 2025-10-04 20:15:37,082 log 26036 22928 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\IRADUKUNDA Bertrand\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\IRADUKUNDA Bertrand\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\IRADUKUNDA Bertrand\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\IRADUKUNDA Bertrand\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+INFO 2025-10-04 20:15:48,976 autoreload 11300 18344 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\settings.py changed, reloading.
+INFO 2025-10-04 20:15:53,521 autoreload 6904 15964 Watching for file changes with StatReloader
+INFO 2025-10-04 20:17:45,560 autoreload 6904 15964 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\apps\trips\views.py changed, reloading.
+INFO 2025-10-04 20:17:49,965 autoreload 6172 15392 Watching for file changes with StatReloader
+INFO 2025-10-04 20:18:35,360 autoreload 6172 15392 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\apps\trips\views.py changed, reloading.
+INFO 2025-10-04 20:18:45,145 autoreload 13276 21644 Watching for file changes with StatReloader
+INFO 2025-10-04 20:20:38,810 autoreload 24012 2484 Watching for file changes with StatReloader
+WARNING 2025-10-04 20:21:08,261 log 24012 20980 Bad Request: /api/trip/plan/
+WARNING 2025-10-04 20:21:08,262 basehttp 24012 20980 "POST /api/trip/plan/ HTTP/1.1" 400 47
+WARNING 2025-10-04 20:22:19,939 log 24012 26732 Bad Request: /api/trip/plan/
+WARNING 2025-10-04 20:22:19,939 basehttp 24012 26732 "POST /api/trip/plan/ HTTP/1.1" 400 47
+INFO 2025-10-04 20:23:08,097 autoreload 24012 2484 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\apps\trips\views.py changed, reloading.
+INFO 2025-10-04 20:23:13,502 autoreload 5464 23308 Watching for file changes with StatReloader
+INFO 2025-10-04 20:23:20,117 autoreload 5464 23308 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\apps\trips\views.py changed, reloading.
+INFO 2025-10-04 20:23:24,154 autoreload 18668 25196 Watching for file changes with StatReloader
+INFO 2025-10-04 20:23:34,781 autoreload 18668 25196 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\apps\trips\urls.py changed, reloading.
+INFO 2025-10-04 20:23:39,095 autoreload 26928 16336 Watching for file changes with StatReloader
+ERROR 2025-10-04 20:24:17,478 log 7664 22792 Internal Server Error: /api/trip/plan/
+INFO 2025-10-04 20:24:40,724 autoreload 26928 16336 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\apps\trips\views.py changed, reloading.
+INFO 2025-10-04 20:24:46,359 autoreload 23568 2440 Watching for file changes with StatReloader
+INFO 2025-10-04 20:25:51,276 autoreload 18548 23596 Watching for file changes with StatReloader
+WARNING 2025-10-04 20:26:10,186 log 18548 19968 Bad Request: /api/trip/plan/
+WARNING 2025-10-04 20:26:10,186 basehttp 18548 19968 "POST /api/trip/plan/ HTTP/1.1" 400 264
+INFO 2025-10-04 20:28:00,470 autoreload 18548 23596 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\apps\trips\views.py changed, reloading.
+INFO 2025-10-04 20:28:04,877 autoreload 24364 22588 Watching for file changes with StatReloader
+INFO 2025-10-04 20:29:25,073 autoreload 19320 8996 Watching for file changes with StatReloader
+WARNING 2025-10-04 20:29:42,023 log 19320 17740 Bad Request: /api/trip/plan/
+WARNING 2025-10-04 20:29:42,025 basehttp 19320 17740 "POST /api/trip/plan/ HTTP/1.1" 400 412
+INFO 2025-10-04 20:31:09,255 autoreload 19320 8996 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\apps\trips\views.py changed, reloading.
+INFO 2025-10-04 20:31:15,452 autoreload 6072 15308 Watching for file changes with StatReloader
+INFO 2025-10-04 20:32:26,863 autoreload 6072 15308 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\apps\trips\views.py changed, reloading.
+INFO 2025-10-04 20:32:33,854 autoreload 22296 18560 Watching for file changes with StatReloader
+INFO 2025-10-04 20:32:59,606 autoreload 22296 18560 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\apps\trips\views.py changed, reloading.
+INFO 2025-10-04 20:33:14,608 autoreload 8156 2112 Watching for file changes with StatReloader
+INFO 2025-10-04 20:34:27,684 basehttp 8156 7492 "POST /api/trip/plan/ HTTP/1.1" 200 548
+WARNING 2025-10-04 20:34:27,858 log 8156 7492 Not Found: /api/trip/temp_123/logs/
+WARNING 2025-10-04 20:34:27,862 basehttp 8156 7492 "GET /api/trip/temp_123/logs/ HTTP/1.1" 404 3268
+INFO 2025-10-04 20:36:38,179 autoreload 8156 2112 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\apps\trips\views.py changed, reloading.
+INFO 2025-10-04 20:36:43,629 autoreload 14400 11952 Watching for file changes with StatReloader
+INFO 2025-10-04 20:36:54,442 autoreload 14400 11952 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\apps\trips\views.py changed, reloading.
+INFO 2025-10-04 20:36:59,440 autoreload 14836 14544 Watching for file changes with StatReloader
+INFO 2025-10-04 20:38:30,397 views 14836 7392 Trip planning request received: POST from http://localhost:3000
+INFO 2025-10-04 20:38:30,398 views 14836 7392 Request data: {'current_location': 'Rwanda', 'pickup_location': 'Karongi', 'dropoff_location': 'Kigali', 'cycle_type': '70_8'}
+INFO 2025-10-04 20:38:30,402 basehttp 14836 7392 "POST /api/trip/plan/ HTTP/1.1" 200 548
+WARNING 2025-10-04 20:38:30,624 log 14836 7392 Not Found: /api/trip/temp_123/logs/
+WARNING 2025-10-04 20:38:30,624 basehttp 14836 7392 "GET /api/trip/temp_123/logs/ HTTP/1.1" 404 3268
+INFO 2025-10-04 20:39:24,787 views 14836 26764 Trip planning request received: POST from http://localhost:3000
+INFO 2025-10-04 20:39:24,788 views 14836 26764 Request data: {'current_location': 'Rwanda', 'pickup_location': 'Karongi', 'dropoff_location': 'Kigali', 'cycle_type': '70_8'}
+INFO 2025-10-04 20:39:24,790 basehttp 14836 26764 "POST /api/trip/plan/ HTTP/1.1" 200 548
+WARNING 2025-10-04 20:39:24,871 log 14836 26764 Not Found: /api/trip/temp_123/logs/
+WARNING 2025-10-04 20:39:24,872 basehttp 14836 26764 "GET /api/trip/temp_123/logs/ HTTP/1.1" 404 3268
+INFO 2025-10-04 20:41:20,274 autoreload 14836 14544 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\apps\trips\views.py changed, reloading.
+INFO 2025-10-04 20:41:24,960 autoreload 19772 25844 Watching for file changes with StatReloader
+INFO 2025-10-04 20:41:39,579 autoreload 19772 25844 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\settings.py changed, reloading.
+INFO 2025-10-04 20:41:43,014 autoreload 26256 24572 Watching for file changes with StatReloader
+INFO 2025-10-04 20:43:06,637 views 16100 16480 Trip planning request from: unknown
+INFO 2025-10-04 20:43:06,656 views 16100 16480 Extracted request data: {'current_location': 'Rwanda', 'pickup_location': 'Karongi', 'dropoff_location': 'Kigali', 'cycle_type': '70_8'}
+INFO 2025-10-04 20:43:06,674 views 16100 16480 Trip planned successfully: trip_52330
+INFO 2025-10-04 20:43:25,735 views 7520 17964 Trip planning request from: unknown
+INFO 2025-10-04 20:43:25,743 views 7520 17964 Extracted request data: {'current_location': 'Rwanda'}
+WARNING 2025-10-04 20:43:25,756 log 7520 17964 Bad Request: /api/trip/plan/
+INFO 2025-10-04 20:43:44,280 views 26636 1308 Trip planning request from: unknown
+ERROR 2025-10-04 20:43:44,288 views 26636 1308 Unexpected error in plan_trip: JSON parse error - Expecting value: line 1 column 1 (char 0)
+ERROR 2025-10-04 20:43:44,303 log 26636 1308 Internal Server Error: /api/trip/plan/
+INFO 2025-10-04 20:43:59,887 autoreload 26256 24572 S:\freelancing projects\RouteLogix-Django-React\backend\routelogix\apps\trips\views.py changed, reloading.
+INFO 2025-10-04 20:44:06,829 autoreload 15648 20356 Watching for file changes with StatReloader
+INFO 2025-10-04 20:44:19,668 views 22156 17416 Trip planning request from: unknown
+ERROR 2025-10-04 20:44:19,676 views 22156 17416 Error parsing request data: JSON parse error - Expecting value: line 1 column 1 (char 0)
+WARNING 2025-10-04 20:44:19,697 log 22156 17416 Bad Request: /api/trip/plan/
+INFO 2025-10-04 20:56:06,787 views 15648 26188 Trip planning request from: http://localhost:3000
+INFO 2025-10-04 20:56:06,797 views 15648 26188 Extracted request data: {'current_location': 'Rwanda', 'pickup_location': 'Karongi', 'dropoff_location': 'Kigali', 'cycle_type': '70_8'}
+INFO 2025-10-04 20:56:06,798 views 15648 26188 Trip planned successfully: trip_95863
+INFO 2025-10-04 20:56:06,807 basehttp 15648 26188 "POST /api/trip/plan/ HTTP/1.1" 200 1081
+WARNING 2025-10-04 20:56:06,990 log 15648 26188 Not Found: /api/trip/trip_95863/logs/
+WARNING 2025-10-04 20:56:06,991 basehttp 15648 26188 "GET /api/trip/trip_95863/logs/ HTTP/1.1" 404 3274
+INFO 2025-10-04 21:03:30,485 views 15648 14356 Trip planning request from: http://localhost:3000
+INFO 2025-10-04 21:03:30,491 views 15648 14356 Extracted request data: {'current_location': 'New York', 'pickup_location': 'Chikago', 'dropoff_location': 'Los ageles', 'cycle_type': '70_8'}
+INFO 2025-10-04 21:03:30,493 views 15648 14356 Trip planned successfully: trip_88099
+INFO 2025-10-04 21:03:30,502 basehttp 15648 14356 "POST /api/trip/plan/ HTTP/1.1" 200 1099
+WARNING 2025-10-04 21:03:30,581 log 15648 14356 Not Found: /api/trip/trip_88099/logs/
+WARNING 2025-10-04 21:03:30,582 basehttp 15648 14356 "GET /api/trip/trip_88099/logs/ HTTP/1.1" 404 3274
+INFO 2025-10-04 21:07:18,194 views 15648 5820 Trip planning request from: http://localhost:3000
+INFO 2025-10-04 21:07:18,208 views 15648 5820 Extracted request data: {'current_location': 'New York', 'pickup_location': 'Chicago', 'dropoff_location': 'Los angeles', 'cycle_type': '70_8'}
+INFO 2025-10-04 21:07:18,209 views 15648 5820 Trip planned successfully: trip_50944
+INFO 2025-10-04 21:07:18,228 basehttp 15648 5820 "POST /api/trip/plan/ HTTP/1.1" 200 1103
+WARNING 2025-10-04 21:07:18,362 log 15648 5820 Not Found: /api/trip/trip_50944/logs/
+WARNING 2025-10-04 21:07:18,363 basehttp 15648 5820 "GET /api/trip/trip_50944/logs/ HTTP/1.1" 404 3274

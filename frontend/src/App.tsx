@@ -16,19 +16,46 @@ function App() {
   const handleTripPlan = async (planRequest: TripPlanRequest) => {
     setLoading(true);
     setError(null);
+    setTripData(null); // Clear previous trip data
+    setLogsData(null); // Clear previous logs data
     
     try {
+      console.log('🎯 Planning trip with data:', planRequest);
+      
       // Plan the trip
       const response = await tripAPI.planTrip(planRequest);
-      setTripData(response);
+      console.log('✅ Trip planned successfully:', response);
       
-      // Get the logs for the planned trip
-      const logsResponse = await tripAPI.getTripLogs(response.trip_id);
-      setLogsData(logsResponse);
+      if (response && response.trip_id) {
+        setTripData(response);
+        
+        // Get the logs for the planned trip
+        try {
+          const logsResponse = await tripAPI.getTripLogs(response.trip_id);
+          setLogsData(logsResponse);
+        } catch (logsError) {
+          console.warn('📋 Could not fetch trip logs, continuing without logs:', logsError);
+          // Don't fail the entire trip planning if logs fail
+        }
+      } else {
+        throw new Error('Invalid trip response received');
+      }
       
     } catch (err: any) {
-      console.error('Error planning trip:', err);
-      setError(err.response?.data?.error || 'Failed to plan trip. Please try again.');
+      console.error('❌ Error planning trip:', err);
+      
+      // Better error handling
+      let errorMessage = 'Failed to plan trip. Please try again.';
+      
+      if (err.message) {
+        errorMessage = err.message;
+      } else if (err.response?.data?.error) {
+        errorMessage = err.response.data.error;
+      } else if (err.response?.statusText) {
+        errorMessage = `Server error: ${err.response.statusText}`;
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

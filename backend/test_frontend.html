@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RouteLogix API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .container { margin: 20px 0; }
+        .form-group { margin: 10px 0; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        button { background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        .result { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 4px; background-color: #f9f9f9; }
+        .success { border-color: #28a745; background-color: #d4edda; color: #155724; }
+        .error { border-color: #dc3545; background-color: #f8d7da; color: #721c24; }
+        pre { white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <h1>🚛 RouteLogix API Test Page</h1>
+    
+    <div class="container">
+        <h2>Test Trip Planning API</h2>
+        <form id="tripForm">
+            <div class="form-group">
+                <label for="currentLocation">Current Location:</label>
+                <input type="text" id="currentLocation" name="current_location" value="Rwanda" placeholder="Enter current location">
+            </div>
+            
+            <div class="form-group">
+                <label for="pickupLocation">Pickup Location:</label>
+                <input type="text" id="pickupLocation" name="pickup_location" value="Karongi" placeholder="Enter pickup location" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="dropoffLocation">Dropoff Location:</label>
+                <input type="text" id="dropoffLocation" name="dropoff_location" value="Kigali" placeholder="Enter dropoff location" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="cycleType">HOS Cycle Type:</label>
+                <select id="cycleType" name="cycle_type">
+                    <option value="70_8" selected>70/8 Hour Rule</option>
+                    <option value="60_7">60/7 Hour Rule</option>
+                </select>
+            </div>
+            
+            <button type="submit">🚀 Plan Trip</button>
+            <button type="button" onclick="testAPI()">🔧 Test API Connection</button>
+        </form>
+    </div>
+    
+    <div id="result" class="result" style="display: none;"></div>
+
+    <script>
+        // Base API URL
+        const API_URL = 'http://localhost:8000/api/trip/plan/';
+        
+        // Form submission handler
+        document.getElementById('tripForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            console.log('Sending data:', data);
+            
+            try {
+                showResult('⏳ Planning trip...', 'info');
+                
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                console.log('Response:', result);
+                
+                if (result.success) {
+                    showResult(`
+                        ✅ <strong>Trip Planned Successfully!</strong><br>
+                        <strong>Trip ID:</strong> ${result.trip_id}<br>
+                        <strong>From:</strong> ${result.pickup_location}<br>
+                        <strong>To:</strong> ${result.dropoff_location}<br>
+                        <strong>Duration:</strong> ${result.estimated_duration}<br>
+                        <strong>Distance:</strong> ${result.estimated_distance}<br>
+                        <strong>Current Location:</strong> ${result.current_location}<br>
+                        <strong>HOS Cycle:</strong> ${result.cycle_type}<br>
+                        <br>
+                        <details>
+                            <summary>📋 Full Response Data</summary>
+                            <pre>${JSON.stringify(result, null, 2)}</pre>
+                        </details>
+                    `, 'success');
+                } else {
+                    showResult(`❌ <strong>Error:</strong> ${result.error}`, 'error');
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(`🚫 <strong>Network Error:</strong> ${error.message}`, 'error');
+            }
+        });
+        
+        // Test API connection
+        async function testAPI() {
+            try {
+                showResult('🔍 Testing API connection...', 'info');
+                
+                const response = await fetch(API_URL, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                });
+                
+                const result = await response.json();
+                console.log('API Test Result:', result);
+                
+                if (result.success) {
+                    showResult(`
+                        ✅ <strong>API Connection Successful!</strong><br>
+                        <strong>Version:</strong> ${result.version}<br>
+                        <strong>Endpoint:</strong> ${result.endpoint}<br>
+                        <br>
+                        <details>
+                            <summary>📋 API Documentation</summary>
+                            <pre>${JSON.stringify(result, null, 2)}</pre>
+                        </details>
+                    `, 'success');
+                } else {
+                    showResult(`❌ <strong>API Test Failed:</strong> ${result.error}`, 'error');
+                }
+                
+            } catch (error) {
+                console.error('API Test Error:', error);
+                showResult(`🚫 <strong>API Connection Failed:</strong> ${error.message}<br><br>
+                    <strong>Common Solutions:</strong><br>
+                    • Make sure Django server is running on port 8000<br>
+                    • Check if CORS is properly configured<br>
+                    • Verify the API endpoint is accessible
+                `, 'error');
+            }
+        }
+        
+        // Display result helper
+        function showResult(message, type = 'info') {
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = message;
+            resultDiv.className = `result ${type}`;
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Test API connection on page load
+        window.addEventListener('load', function() {
+            console.log('🌐 RouteLogix API Test Page Loaded');
+            console.log('📍 Testing API connection...');
+            // Auto-test API connection after a short delay
+            setTimeout(testAPI, 500);
+        });
+    </script>
+</body>
+</html>
