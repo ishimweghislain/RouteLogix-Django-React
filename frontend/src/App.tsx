@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import WelcomePage from './components/WelcomePage';
+import Dashboard from './components/Dashboard';
 import TripPlanForm from './components/TripPlanForm';
 import RouteMap from './components/RouteMap';
 import DailyLogSheet from './components/DailyLogSheet';
+import UserProfile from './components/UserProfile';
+import Sidebar from './components/Sidebar';
+import NotificationToast from './components/NotificationToast';
+import { Bars3Icon } from '@heroicons/react/24/outline';
+import { motion } from 'framer-motion';
 import { tripAPI } from './services/api';
 import { TripPlanRequest, TripPlanResponse, TripLogsResponse } from './types';
 import { exportLogsToPDF } from './utils/pdfExport';
 
-function App() {
+function AppContent() {
+  const { user, isLoading } = useAuth();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [tripData, setTripData] = useState<TripPlanResponse | null>(null);
   const [logsData, setLogsData] = useState<TripLogsResponse | null>(null);
   const [loading, setLoading] = useState(false);
@@ -16,46 +26,25 @@ function App() {
   const handleTripPlan = async (planRequest: TripPlanRequest) => {
     setLoading(true);
     setError(null);
-    setTripData(null); // Clear previous trip data
-    setLogsData(null); // Clear previous logs data
+    setTripData(null);
+    setLogsData(null);
     
     try {
-      console.log('🎯 Planning trip with data:', planRequest);
-      
-      // Plan the trip
       const response = await tripAPI.planTrip(planRequest);
-      console.log('✅ Trip planned successfully:', response);
       
       if (response && response.trip_id) {
         setTripData(response);
         
-        // Get the logs for the planned trip
         try {
           const logsResponse = await tripAPI.getTripLogs(response.trip_id);
           setLogsData(logsResponse);
         } catch (logsError) {
-          console.warn('📋 Could not fetch trip logs, continuing without logs:', logsError);
-          // Don't fail the entire trip planning if logs fail
+          console.warn('Could not fetch trip logs:', logsError);
         }
-      } else {
-        throw new Error('Invalid trip response received');
       }
-      
     } catch (err: any) {
-      console.error('❌ Error planning trip:', err);
-      
-      // Better error handling
-      let errorMessage = 'Failed to plan trip. Please try again.';
-      
-      if (err.message) {
-        errorMessage = err.message;
-      } else if (err.response?.data?.error) {
-        errorMessage = err.response.data.error;
-      } else if (err.response?.statusText) {
-        errorMessage = `Server error: ${err.response.statusText}`;
-      }
-      
-      setError(errorMessage);
+      console.error('Error planning trip:', err);
+      setError('Failed to plan trip. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -66,171 +55,142 @@ function App() {
     
     try {
       await exportLogsToPDF(logsData);
-      // Show success message
-      alert('ELD logs exported successfully! Check your downloads folder.');
     } catch (err) {
       console.error('Error exporting PDF:', err);
-      alert('Failed to export PDF. Please try again.');
     }
   };
 
+  const handleLogin = () => {
+    // This will be called after successful login
+    console.log('User logged in successfully');
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading RouteLogix...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <WelcomePage onLogin={handleLogin} />;
+  }
+
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-100">
-        {/* Navigation */}
-        <nav className="bg-white shadow-lg">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="flex justify-between h-16">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <h1 className="text-xl font-bold text-gray-900">RouteLogix</h1>
-                  <p className="text-sm text-gray-500">ELD & Trip Planning System</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-8">
-                <NavLink to="/" label="Plan Trip" />
-                <NavLink to="/route" label="Route Map" disabled={!tripData} />
-                <NavLink to="/logs" label="Daily Logs" disabled={!tripData} />
-              </div>
-            </div>
-          </div>
-        </nav>
+    <div className="min-h-screen bg-gray-50 flex">
+      {/* Sidebar */}
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      
+      {/* Main Content */}
+      <div className="flex-1 lg:pl-0">
+        {/* Top Header for mobile */}
+        <div className="lg:hidden bg-white shadow-sm border-b px-4 py-3 flex items-center justify-between">
+          <h1 className="text-lg font-semibold text-gray-900">RouteLogix</h1>
+          <motion.button
+            onClick={() => setSidebarOpen(true)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors"
+          >
+            <Bars3Icon className="h-6 w-6 text-gray-600" />
+          </motion.button>
+        </div>
 
-        {/* Main Content */}
-        <main className="max-w-7xl mx-auto py-6 px-4">
-          {/* Error Alert */}
-          {error && (
-            <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative">
-              <span className="block sm:inline">{error}</span>
-              <button
-                onClick={() => setError(null)}
-                className="absolute top-0 bottom-0 right-0 px-4 py-3"
-              >
-                <span className="sr-only">Dismiss</span>
-                ×
-              </button>
-            </div>
-          )}
+        {/* Desktop sidebar toggle */}
+        <div className="hidden lg:block">
+          <motion.button
+            onClick={() => setSidebarOpen(true)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="fixed top-4 left-4 z-30 p-3 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow border"
+          >
+            <Bars3Icon className="h-6 w-6 text-gray-600" />
+          </motion.button>
+        </div>
 
-          {/* Success Alert */}
-          {tripData && !loading && (
-            <div className="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded">
-              Trip planned successfully! Distance: {tripData.route.total_distance.toFixed(0)} miles, 
-              Estimated time: {tripData.route.estimated_duration.toFixed(1)} hours
-            </div>
-          )}
-
+        {/* Routes */}
+        <main className="p-4 lg:p-8">
           <Routes>
-            <Route path="/" element={
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-1">
-                  <TripPlanForm onSubmit={handleTripPlan} loading={loading} />
-                </div>
-                <div className="lg:col-span-2">
-                  <div className="bg-white shadow rounded-lg p-6">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-4">Trip Overview</h2>
-                    {tripData ? (
-                      <div className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
-                          <div>
-                            <h3 className="text-sm font-medium text-gray-500">Route</h3>
-                            <p className="text-sm text-gray-900">
-                              {tripData.route.current_location} → {tripData.route.pickup_location} → {tripData.route.dropoff_location}
-                            </p>
-                          </div>
-                          <div>
-                            <h3 className="text-sm font-medium text-gray-500">HOS Cycle</h3>
-                            <p className="text-sm text-gray-900">
-                              {tripData.hos_compliance.cycle_type === '70_8' ? '70-hour/8-day' : '60-hour/7-day'}
-                            </p>
-                          </div>
-                          <div>
-                            <h3 className="text-sm font-medium text-gray-500">Total Distance</h3>
-                            <p className="text-sm text-gray-900">{tripData.route.total_distance.toFixed(0)} miles</p>
-                          </div>
-                          <div>
-                            <h3 className="text-sm font-medium text-gray-500">Driving Time</h3>
-                            <p className="text-sm text-gray-900">{tripData.route.estimated_duration.toFixed(1)} hours</p>
-                          </div>
-                        </div>
-                        
-                        <div className="pt-4 border-t">
-                          <h3 className="text-sm font-medium text-gray-500 mb-2">Quick Stats</h3>
-                          <div className="grid grid-cols-3 gap-4 text-center">
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/plan" element={
+              <div className="max-w-7xl mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <div className="lg:col-span-1">
+                    <TripPlanForm onSubmit={handleTripPlan} loading={loading} />
+                  </div>
+                  <div className="lg:col-span-2">
+                    <div className="bg-white shadow-xl rounded-2xl p-6">
+                      <h2 className="text-xl font-semibold text-gray-900 mb-4">Trip Overview</h2>
+                      {tripData ? (
+                        <div className="space-y-4">
+                          <div className="grid grid-cols-2 gap-4">
                             <div>
-                              <div className="text-lg font-semibold text-primary-600">
-                                {tripData.fuel_stops?.length || 0}
-                              </div>
-                              <div className="text-xs text-gray-500">Fuel Stops</div>
+                              <h3 className="text-sm font-medium text-gray-500">Route</h3>
+                              <p className="text-sm text-gray-900">
+                                {tripData.route.current_location} → {tripData.route.pickup_location} → {tripData.route.dropoff_location}
+                              </p>
                             </div>
                             <div>
-                              <div className="text-lg font-semibold text-primary-600">
-                                {tripData.rest_stops?.length || 0}
-                              </div>
-                              <div className="text-xs text-gray-500">Rest Periods</div>
-                            </div>
-                            <div>
-                              <div className="text-lg font-semibold text-primary-600">
-                                {Math.ceil(tripData.route.estimated_duration / 11) || 1}
-                              </div>
-                              <div className="text-xs text-gray-500">Est. Days</div>
+                              <h3 className="text-sm font-medium text-gray-500">HOS Cycle</h3>
+                              <p className="text-sm text-gray-900">
+                                {tripData.hos_compliance.cycle_type === '70_8' ? '70-hour/8-day' : '60-hour/7-day'}
+                              </p>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    ) : (
-                      <div className="text-center py-12">
-                        <div className="text-gray-400 text-6xl mb-4">🚛</div>
-                        <h3 className="text-lg font-medium text-gray-900 mb-2">No Trip Planned</h3>
-                        <p className="text-gray-500">Fill out the form to plan your trip and see route details</p>
-                      </div>
-                    )}
+                      ) : (
+                        <div className="text-center py-12">
+                          <div className="text-gray-400 text-6xl mb-4">🚛</div>
+                          <h3 className="text-lg font-medium text-gray-900 mb-2">No Trip Planned</h3>
+                          <p className="text-gray-500">Fill out the form to plan your trip</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             } />
-            
-            <Route path="/route" element={
-              <div className="h-[600px]">
-                <RouteMap tripData={tripData || undefined} />
+            <Route path="/dashboard/route" element={
+              <div className="max-w-7xl mx-auto">
+                <div className="bg-white shadow-xl rounded-2xl overflow-hidden" style={{ height: '600px' }}>
+                  <RouteMap tripData={tripData || undefined} />
+                </div>
               </div>
             } />
-            
-            <Route path="/logs" element={
-              <DailyLogSheet logsData={logsData || undefined} onExportPDF={handleExportPDF} />
+            <Route path="/dashboard/logs" element={
+              <div className="max-w-7xl mx-auto">
+                <DailyLogSheet logsData={logsData || undefined} onExportPDF={handleExportPDF} />
+              </div>
             } />
+            <Route path="/dashboard/analytics" element={
+              <div className="max-w-7xl mx-auto">
+                <div className="bg-white shadow-xl rounded-2xl p-6">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Analytics Dashboard</h2>
+                  <p className="text-gray-600">Trip statistics and reports coming soon...</p>
+                </div>
+              </div>
+            } />
+            <Route path="/dashboard/profile" element={<UserProfile />} />
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </main>
       </div>
-    </Router>
+    </div>
   );
 }
 
-// Navigation Link Component
-function NavLink({ to, label, disabled = false }: { to: string; label: string; disabled?: boolean }) {
-  const location = useLocation();
-  const isActive = location.pathname === to;
-  
-  if (disabled) {
-    return (
-      <span className="text-gray-400 cursor-not-allowed px-3 py-2 rounded-md text-sm font-medium">
-        {label}
-      </span>
-    );
-  }
-  
+function App() {
   return (
-    <Link
-      to={to}
-      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-        isActive
-          ? 'bg-primary-100 text-primary-700'
-          : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
-      }`}
-    >
-      {label}
-    </Link>
+    <AuthProvider>
+      <Router>
+        <AppContent />
+        <NotificationToast />
+      </Router>
+    </AuthProvider>
   );
 }
 

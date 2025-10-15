@@ -213,6 +213,182 @@ def create_admin_user(request):
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+@method_decorator(csrf_exempt, name='dispatch')
+class RegisterView(APIView):
+    """
+    Handle user registration with profile creation.
+    """
+    permission_classes = [permissions.AllowAny]
+    
+    def post(self, request):
+        try:
+            data = json.loads(request.body) if isinstance(request.body, bytes) else request.data
+            username = data.get('username')
+            email = data.get('email')
+            password = data.get('password')
+            first_name = data.get('first_name', '')
+            last_name = data.get('last_name', '')
+            
+            # Validation
+            if not username or not email or not password:
+                return Response({
+                    'error': 'Username, email, and password are required'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            # Check if username already exists
+            if User.objects.filter(username=username).exists():
+                return Response({
+                    'error': 'Username already exists'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            # Check if email already exists
+            if User.objects.filter(email=email).exists():
+                return Response({
+                    'error': 'Email already exists'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            # Create user
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                password=password,
+                first_name=first_name,
+                last_name=last_name
+            )
+            
+            # Create user profile
+            from .models import UserProfile
+            profile = UserProfile.objects.create(
+                user=user,
+                user_type='driver',
+                phone=data.get('phone', ''),
+                is_active_driver=True
+            )
+            
+            # Create token
+            token, created = Token.objects.get_or_create(user=user)
+            
+            logger.info(f"User {username} registered successfully")
+            
+            return Response({
+                'token': token.key,
+                'user': {
+                    'id': user.id,
+                    'username': user.username,
+                    'email': user.email,
+                    'first_name': user.first_name,
+                    'last_name': user.last_name,
+                    'user_type': profile.user_type,
+                    'is_active_driver': profile.is_active_driver,
+                },
+                'message': 'Registration successful'
+            }, status=status.HTTP_201_CREATED)
+        
+        except json.JSONDecodeError:
+            return Response({
+                'error': 'Invalid JSON data'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        except Exception as e:
+            logger.error(f"Registration error: {str(e)}")
+            return Response({
+                'error': 'Registration failed'
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class UpdateProfileView(APIView):
+    """
+    Handle user profile updates with password verification.
+    """
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def put(self, request):
+        try:
+            data = json.loads(request.body) if isinstance(request.body, bytes) else request.data
+            current_password = data.get('current_password')
+            
+            # Verify current password for security
+            if not current_password:
+                return Response({
+                    'error': 'Current password is required for security'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            if not request.user.check_password(current_password):
+                return Response({
+                    'error': 'Current password is incorrect'
+                }, status=status.HTTP_401_UNAUTHORIZED)
+            
+            user = request.user
+            
+            # Update user fields
+            if 'first_name' in data:
+                user.first_name = data['first_name']
+            if 'last_name' in data:
+                user.last_name = data['last_name']
+            if 'email' in data:
+                # Check if email is already taken by another user
+                if User.objects.filter(email=data['email']).exclude(id=user.id).exists():
+                    return Response({
+                        'error': 'Email is already taken'
+                    }, status=status.HTTP_400_BAD_REQUEST)
+                user.email = data['email']
+            
+            # Update password if provided
+            if 'new_password' in data and data['new_password']:
+                user.set_password(data['new_password'])
+            
+            user.save()
+            
+            # Update or create profile
+            from .models import UserProfile
+            profile, created = UserProfile.objects.get_or_create(user=user)
+            
+            if 'phone' in data:
+                profile.phone = data['phone']
+            if 'emergency_contact' in data:
+                profile.emergency_contact = data['emergency_contact']
+            if 'emergency_phone' in data:
+                profile.emergency_phone = data['emergency_phone']
+            if 'timezone' in data:
+                profile.timezone = data['timezone']
+            if 'language' in data:
+                profile.language = data['language']
+            
+            profile.save()
+            
+            logger.info(f"Profile updated for user {user.username}")
+            
+            return Response({
+                'user': {
+                    'id': user.id,
+                    'username': user.username,
+                    'email': user.email,
+                    'first_name': user.first_name,
+                    'last_name': user.last_name,
+                    'user_type': profile.user_type,
+                    'phone': profile.phone,
+                    'emergency_contact': profile.emergency_contact,
+                    'emergency_phone': profile.emergency_phone,
+                    'timezone': profile.timezone,
+                    'language': profile.language,
+                    'is_active_driver': profile.is_active_driver,
+                },
+                'message': 'Profile updated successfully'
+            }, status=status.HTTP_200_OK)
+        
+        except json.JSONDecodeError:
+            return Response({
+                'error': 'Invalid JSON data'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        except Exception as e:
+            logger.error(f"Profile update error: {str(e)}")
+            return Response({
+                'error': 'Profile update failed'
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def login_sessions(request):

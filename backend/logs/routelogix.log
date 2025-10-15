@@ -125,3 +125,64 @@ INFO 2025-10-04 21:07:18,209 views 15648 5820 Trip planned successfully: trip_50
 INFO 2025-10-04 21:07:18,228 basehttp 15648 5820 "POST /api/trip/plan/ HTTP/1.1" 200 1103
 WARNING 2025-10-04 21:07:18,362 log 15648 5820 Not Found: /api/trip/trip_50944/logs/
 WARNING 2025-10-04 21:07:18,363 basehttp 15648 5820 "GET /api/trip/trip_50944/logs/ HTTP/1.1" 404 3274
+INFO 2025-10-15 17:32:30,289 autoreload 20832 4736 Watching for file changes with StatReloader
+INFO 2025-10-15 17:34:22,197 basehttp 20832 17532 "OPTIONS /api/trip/plan/ HTTP/1.1" 200 0
+INFO 2025-10-15 17:34:22,558 views 20832 17532 Trip planning request from: http://localhost:3000
+INFO 2025-10-15 17:34:22,559 views 20832 17532 Extracted request data: {'current_location': 'New York', 'pickup_location': 'Chicago', 'dropoff_location': 'Los angelos', 'cycle_type': '70_8'}
+INFO 2025-10-15 17:34:22,559 views 20832 17532 Trip planned successfully: trip_25291
+INFO 2025-10-15 17:34:22,562 basehttp 20832 17532 "POST /api/trip/plan/ HTTP/1.1" 200 1103
+WARNING 2025-10-15 17:34:22,961 log 20832 17532 Not Found: /api/trip/trip_25291/logs/
+WARNING 2025-10-15 17:34:22,961 basehttp 20832 17532 "GET /api/trip/trip_25291/logs/ HTTP/1.1" 404 2875
+INFO 2025-10-15 17:35:19,617 basehttp 20832 10656 "GET /admin HTTP/1.1" 301 0
+INFO 2025-10-15 17:35:19,934 basehttp 20832 7532 "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-10-15 17:35:21,078 basehttp 20832 7532 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4181
+INFO 2025-10-15 17:35:21,721 basehttp 20832 7532 "GET /static/admin/css/base.css HTTP/1.1" 200 22455
+INFO 2025-10-15 17:35:21,750 basehttp 20832 20428 "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 3066
+INFO 2025-10-15 17:35:21,978 basehttp 20832 11924 "GET /static/admin/css/login.css HTTP/1.1" 200 1019
+INFO 2025-10-15 17:35:21,983 basehttp 20832 7532 "GET /static/admin/js/theme.js HTTP/1.1" 200 1999
+INFO 2025-10-15 17:35:21,988 basehttp 20832 17564 "GET /static/admin/css/responsive.css HTTP/1.1" 200 19558
+INFO 2025-10-15 17:35:22,000 basehttp 20832 20428 "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3142
+INFO 2025-10-15 17:35:22,020 basehttp 20832 3744 "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2838
+WARNING 2025-10-15 17:35:22,187 log 20832 3744 Not Found: /favicon.ico
+WARNING 2025-10-15 17:35:22,188 basehttp 20832 3744 "GET /favicon.ico HTTP/1.1" 404 2684
+INFO 2025-10-15 17:48:22,787 basehttp 20832 8004 "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2025-10-15 17:48:22,961 basehttp 20832 8004 "GET /admin/ HTTP/1.1" 200 5556
+INFO 2025-10-15 17:48:23,058 basehttp 20832 8004 "GET /static/admin/css/dashboard.css HTTP/1.1" 200 470
+INFO 2025-10-15 17:48:23,426 basehttp 20832 8004 "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 334
+INFO 2025-10-15 17:48:23,427 basehttp 20832 12816 "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 383
+INFO 2025-10-15 17:48:46,103 autoreload 20832 4736 C:\Users\user\RouteLogix-Django-React\backend\routelogix\apps\authentication\views.py changed, reloading.
+INFO 2025-10-15 17:48:52,570 autoreload 15496 15020 Watching for file changes with StatReloader
+INFO 2025-10-15 17:48:56,014 autoreload 15496 15020 C:\Users\user\RouteLogix-Django-React\backend\routelogix\apps\authentication\urls.py changed, reloading.
+INFO 2025-10-15 17:49:02,112 autoreload 20348 10560 Watching for file changes with StatReloader
+INFO 2025-10-15 17:49:27,474 autoreload 20348 10560 C:\Users\user\RouteLogix-Django-React\backend\routelogix\settings.py changed, reloading.
+INFO 2025-10-15 17:49:33,166 autoreload 23128 21932 Watching for file changes with StatReloader
+INFO 2025-10-15 18:03:57,765 autoreload 19368 8444 Watching for file changes with StatReloader
+INFO 2025-10-15 18:04:25,892 autoreload 12040 22120 Watching for file changes with StatReloader
+INFO 2025-10-15 18:07:27,676 basehttp 12040 15076 "OPTIONS /api/auth/login/ HTTP/1.1" 200 0
+WARNING 2025-10-15 18:07:29,001 log 12040 15076 Unauthorized: /api/auth/login/
+WARNING 2025-10-15 18:07:29,002 basehttp 12040 15076 "POST /api/auth/login/ HTTP/1.1" 401 31
+INFO 2025-10-15 18:08:43,091 basehttp 12040 13604 "OPTIONS /api/auth/register/ HTTP/1.1" 200 0
+ERROR 2025-10-15 18:08:44,343 views 12040 13604 Registration error: type object 'Token' has no attribute 'objects'
+ERROR 2025-10-15 18:08:44,345 log 12040 13604 Internal Server Error: /api/auth/register/
+ERROR 2025-10-15 18:08:44,346 basehttp 12040 13604 "POST /api/auth/register/ HTTP/1.1" 500 31
+ERROR 2025-10-15 18:10:20,797 views 12040 19168 Login error: type object 'Token' has no attribute 'objects'
+ERROR 2025-10-15 18:10:20,799 log 12040 19168 Internal Server Error: /api/auth/login/
+ERROR 2025-10-15 18:10:20,800 basehttp 12040 19168 "POST /api/auth/login/ HTTP/1.1" 500 24
+ERROR 2025-10-15 18:15:33,484 views 12040 14672 Login error: type object 'Token' has no attribute 'objects'
+ERROR 2025-10-15 18:15:33,487 log 12040 14672 Internal Server Error: /api/auth/login/
+ERROR 2025-10-15 18:15:33,488 basehttp 12040 14672 "POST /api/auth/login/ HTTP/1.1" 500 24
+ERROR 2025-10-15 18:17:17,926 views 12040 13356 Login error: type object 'Token' has no attribute 'objects'
+ERROR 2025-10-15 18:17:17,927 log 12040 13356 Internal Server Error: /api/auth/login/
+ERROR 2025-10-15 18:17:17,928 basehttp 12040 13356 "POST /api/auth/login/ HTTP/1.1" 500 24
+WARNING 2025-10-15 18:17:32,136 log 12040 20136 Bad Request: /api/auth/register/
+WARNING 2025-10-15 18:17:32,137 basehttp 12040 20136 "POST /api/auth/register/ HTTP/1.1" 400 35
+ERROR 2025-10-15 18:17:41,178 views 12040 20136 Login error: type object 'Token' has no attribute 'objects'
+ERROR 2025-10-15 18:17:41,180 log 12040 20136 Internal Server Error: /api/auth/login/
+ERROR 2025-10-15 18:17:41,181 basehttp 12040 20136 "POST /api/auth/login/ HTTP/1.1" 500 24
+ERROR 2025-10-15 18:17:55,825 views 12040 20136 Login error: type object 'Token' has no attribute 'objects'
+ERROR 2025-10-15 18:17:55,828 log 12040 20136 Internal Server Error: /api/auth/login/
+ERROR 2025-10-15 18:17:55,830 basehttp 12040 20136 "POST /api/auth/login/ HTTP/1.1" 500 24
+WARNING 2025-10-15 18:18:16,734 log 12040 20096 Bad Request: /api/auth/register/
+WARNING 2025-10-15 18:18:16,735 basehttp 12040 20096 "POST /api/auth/register/ HTTP/1.1" 400 35
+INFO 2025-10-15 18:28:51,651 autoreload 12040 22120 C:\Users\user\RouteLogix-Django-React\backend\routelogix\settings.py changed, reloading.
+INFO 2025-10-15 18:28:58,958 autoreload 4996 20088 Watching for file changes with StatReloader

@@ -13,7 +13,11 @@ const api = axios.create({
 // Request interceptor
 api.interceptors.request.use(
   (config) => {
-    // Add any auth tokens here if needed
+    // Add auth token from localStorage
+    const token = localStorage.getItem('routelogix_token');
+    if (token) {
+      config.headers.Authorization = `Token ${token}`;
+    }
     return config;
   },
   (error) => {
@@ -72,6 +76,46 @@ const transformTripPlanResponse = (backendData: any): TripPlanResponse => {
     })) || [],
     rest_stops: [],
   };
+};
+
+// Authentication API
+export const authAPI = {
+  // Login user
+  login: async (credentials: { username: string; password: string }) => {
+    const response = await api.post('/api/auth/login/', credentials);
+    return response.data;
+  },
+
+  // Register user
+  register: async (userData: {
+    username: string;
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+    phone?: string;
+  }) => {
+    const response = await api.post('/api/auth/register/', userData);
+    return response.data;
+  },
+
+  // Logout user
+  logout: async () => {
+    const response = await api.post('/api/auth/logout/');
+    return response.data;
+  },
+
+  // Get user profile
+  getProfile: async () => {
+    const response = await api.get('/api/auth/profile/');
+    return response.data;
+  },
+
+  // Update user profile
+  updateProfile: async (data: any) => {
+    const response = await api.put('/api/auth/profile/update/', data);
+    return response.data;
+  }
 };
 
 export const tripAPI = {
