@@ -186,3 +186,46 @@ WARNING 2025-10-15 18:18:16,734 log 12040 20096 Bad Request: /api/auth/register/
 WARNING 2025-10-15 18:18:16,735 basehttp 12040 20096 "POST /api/auth/register/ HTTP/1.1" 400 35
 INFO 2025-10-15 18:28:51,651 autoreload 12040 22120 C:\Users\user\RouteLogix-Django-React\backend\routelogix\settings.py changed, reloading.
 INFO 2025-10-15 18:28:58,958 autoreload 4996 20088 Watching for file changes with StatReloader
+ERROR 2025-10-15 18:35:57,575 views 4996 15516 Registration error: no such table: authtoken_token
+ERROR 2025-10-15 18:35:57,582 log 4996 15516 Internal Server Error: /api/auth/register/
+ERROR 2025-10-15 18:35:57,584 basehttp 4996 15516 "POST /api/auth/register/ HTTP/1.1" 500 31
+ERROR 2025-10-15 18:45:35,001 views 4996 12128 Login error: no such table: authtoken_token
+ERROR 2025-10-15 18:45:35,002 log 4996 12128 Internal Server Error: /api/auth/login/
+ERROR 2025-10-15 18:45:35,003 basehttp 4996 12128 "POST /api/auth/login/ HTTP/1.1" 500 24
+INFO 2025-10-20 11:36:37,106 autoreload 7684 15532 Watching for file changes with StatReloader
+INFO 2025-10-20 11:38:06,147 autoreload 16908 16888 Watching for file changes with StatReloader
+INFO 2025-10-20 11:39:14,566 basehttp 16908 9956 "OPTIONS /api/auth/login/ HTTP/1.1" 200 0
+WARNING 2025-10-20 11:39:15,625 log 16908 9956 Unauthorized: /api/auth/login/
+WARNING 2025-10-20 11:39:15,627 basehttp 16908 9956 "POST /api/auth/login/ HTTP/1.1" 401 31
+INFO 2025-10-20 11:40:22,450 basehttp 16908 17432 "OPTIONS /api/auth/register/ HTTP/1.1" 200 0
+WARNING 2025-10-20 11:40:22,455 log 16908 17432 Bad Request: /api/auth/register/
+WARNING 2025-10-20 11:40:22,456 basehttp 16908 17432 "POST /api/auth/register/ HTTP/1.1" 400 32
+INFO 2025-10-20 11:40:48,266 views 16908 17700 User Ghislain registered successfully
+INFO 2025-10-20 11:40:48,269 basehttp 16908 17700 "POST /api/auth/register/ HTTP/1.1" 201 248
+INFO 2025-10-20 11:41:09,886 basehttp 16908 6948 "OPTIONS /api/trip/plan/ HTTP/1.1" 200 0
+INFO 2025-10-20 11:41:09,896 views 16908 6948 Trip planning request from: http://localhost:3000
+INFO 2025-10-20 11:41:09,899 views 16908 6948 Extracted request data: {'current_location': 'New York', 'pickup_location': 'Chicago', 'dropoff_location': 'Los angelos', 'cycle_type': '60_7'}
+INFO 2025-10-20 11:41:09,900 views 16908 6948 Trip planned successfully: trip_19489
+INFO 2025-10-20 11:41:09,901 basehttp 16908 6948 "POST /api/trip/plan/ HTTP/1.1" 200 1103
+INFO 2025-10-20 11:41:09,922 basehttp 16908 6948 "OPTIONS /api/trip/trip_19489/logs/ HTTP/1.1" 200 0
+WARNING 2025-10-20 11:41:10,078 log 16908 6948 Not Found: /api/trip/trip_19489/logs/
+WARNING 2025-10-20 11:41:10,079 basehttp 16908 6948 "GET /api/trip/trip_19489/logs/ HTTP/1.1" 404 2875
+INFO 2025-10-20 11:41:14,684 views 16908 6948 Trip planning request from: http://localhost:3000
+INFO 2025-10-20 11:41:14,685 views 16908 6948 Extracted request data: {'current_location': 'New York', 'pickup_location': 'Chicago', 'dropoff_location': 'Los angelos', 'cycle_type': '70_8'}
+INFO 2025-10-20 11:41:14,687 views 16908 6948 Trip planned successfully: trip_19489
+INFO 2025-10-20 11:41:14,692 basehttp 16908 6948 "POST /api/trip/plan/ HTTP/1.1" 200 1103
+WARNING 2025-10-20 11:41:14,761 log 16908 6948 Not Found: /api/trip/trip_19489/logs/
+WARNING 2025-10-20 11:41:14,763 basehttp 16908 6948 "GET /api/trip/trip_19489/logs/ HTTP/1.1" 404 2875
+INFO 2025-10-20 11:41:19,405 views 16908 18404 Trip planning request from: http://localhost:3000
+INFO 2025-10-20 11:41:19,405 views 16908 18404 Extracted request data: {'current_location': 'New York', 'pickup_location': 'Chicago', 'dropoff_location': 'Los angelos', 'cycle_type': '60_7'}
+INFO 2025-10-20 11:41:19,406 views 16908 18404 Trip planned successfully: trip_19489
+INFO 2025-10-20 11:41:19,408 basehttp 16908 18404 "POST /api/trip/plan/ HTTP/1.1" 200 1103
+WARNING 2025-10-20 11:41:19,431 log 16908 18404 Not Found: /api/trip/trip_19489/logs/
+WARNING 2025-10-20 11:41:19,432 basehttp 16908 18404 "GET /api/trip/trip_19489/logs/ HTTP/1.1" 404 2875
+INFO 2025-10-20 11:43:07,150 basehttp 16908 15192 "OPTIONS /api/auth/logout/ HTTP/1.1" 200 0
+INFO 2025-10-20 11:43:07,197 basehttp 16908 15192 "POST /api/auth/logout/ HTTP/1.1" 200 31
+WARNING 2025-10-20 11:43:19,284 log 16908 15192 Unauthorized: /api/auth/login/
+WARNING 2025-10-20 11:43:19,284 basehttp 16908 15192 "POST /api/auth/login/ HTTP/1.1" 401 31
+INFO 2025-10-20 11:43:35,748 basehttp 16908 15192 "POST /api/auth/login/ HTTP/1.1" 200 293
+INFO 2025-10-20 11:46:40,048 autoreload 16908 16888 C:\Users\user\RouteLogix-Django-React\backend\routelogix\urls.py changed, reloading.
+INFO 2025-10-20 11:46:42,403 autoreload 15752 12148 Watching for file changes with StatReloader

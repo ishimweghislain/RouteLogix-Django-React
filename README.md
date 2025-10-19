@@ -1,113 +1,161 @@
 # RouteLogix - ELD & Trip Planning System
 
-A comprehensive full-stack web application for commercial truck drivers that combines trip planning with Electronic Logging Device (ELD) functionality. The app calculates FMCSA Hours of Service (HOS) compliant routes and automatically generates daily log sheets.
+A comprehensive full-stack web application for commercial truck drivers that combines trip planning with Electronic Logging Device (ELD) functionality.
 
-## Features
-
-### 🚛 Trip Planning
-- Input current location, pickup location, and dropoff location
-- Support for both address and GPS coordinates
-- Automatic distance and duration calculation
-- HOS cycle type selection (70hr/8day or 60hr/7day)
-
-### 🗺️ Interactive Route Map
-- Visual route display using Leaflet/OpenStreetMap
-- Fuel stop markers every 1,000 miles
-- Required rest stop and break period markers
-- Real-time trip information overlay
-- Responsive design for desktop and mobile
-
-### 📋 ELD Daily Log Sheets
-- Automatic log generation based on FMCSA HOS rules
-- Visual 24-hour grid display with 15-minute intervals
-- Four duty statuses: Off Duty, Sleeper Berth, Driving, On Duty
-- Multi-day trip support with automatic log creation
-- HOS compliance validation and violation reporting
-
-### 📄 Compliance Features
-- FMCSA HOS rules implementation:
-  - 11-hour daily driving limit
-  - 14-hour duty window
-  - 30-minute break after 8 hours of driving
-  - 10-hour rest period requirement
-  - 70hr/8day or 60hr/7day cycle limits
-  - 34-hour restart capability
-- PDF export for compliance documentation
-- Violation tracking and reporting
-
-## Tech Stack
-
-### Backend (Django)
-- **Django 5.2.7** - Web framework
-- **Django REST Framework** - API development
-- **MySQL** - Database (Ghislainwork)
-- **django-cors-headers** - CORS handling
-- **Python 3.12+** - Programming language
-
-### Frontend (React)
-- **React 18** with TypeScript - UI framework
-- **Tailwind CSS 3.4.0** - Styling
-- **React Router** - Navigation
-- **Leaflet + React-Leaflet** - Interactive maps
-- **Axios** - HTTP client
-- **jsPDF + html2canvas** - PDF generation
-
-## Installation
+## 🚀 Quick Start Guide
 
 ### Prerequisites
 - Python 3.12+
 - Node.js 18+
-- MySQL Server (XAMPP recommended)
+- SQLite (included) or MySQL (optional)
 - Git
 
-### Backend Setup
+## 🛠️ Setup Instructions
 
-1. **Clone the repository**
+### 1. Backend Setup
+
+1. **Navigate to backend directory**
    ```bash
-   git clone <repository-url>
-   cd RouteLogix/backend
+   cd backend
    ```
 
-2. **Create virtual environment**
+2. **Create and activate virtual environment**
    ```bash
-   python -m venv venv
-   
    # Windows
-   venv\Scripts\activate
+   python -m venv venv
+   .\venv\Scripts\activate
    
    # macOS/Linux
+   python3 -m venv venv
    source venv/bin/activate
    ```
 
-3. **Install dependencies**
+3. **Install Python dependencies**
    ```bash
-   pip install django djangorestframework mysqlclient django-cors-headers requests python-dotenv
+   pip install -r requirements.txt
    ```
 
-4. **Start MySQL (XAMPP)**
-   - Start XAMPP Control Panel
-   - Start Apache and MySQL services
-   - The database "Ghislainwork" will be created automatically
-
-5. **Run migrations**
+4. **Set up the database**
    ```bash
    python manage.py makemigrations
    python manage.py migrate
    ```
 
-6. **Create superuser (optional)**
+5. **Create a superuser (admin) account**
    ```bash
    python manage.py createsuperuser
    ```
+   Follow the prompts to create an admin account.
 
-7. **Start development server**
+6. **Create a default admin user (username: admin, password: 123)**
+   ```bash
+   python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@example.com', '123')"
+   ```
+
+7. **Start the backend server**
    ```bash
    python manage.py runserver
    ```
+   The backend will be available at `http://localhost:8000`
 
-### Frontend Setup
+### 2. Frontend Setup
 
-1. **Navigate to frontend directory**
+1. **Open a new terminal and navigate to frontend directory**
+   ```bash
+   cd frontend
+   ```
+
+2. **Install Node.js dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**
+   ```bash
+   npm start
+   ```
+   The frontend will be available at `http://localhost:3000`
+
+## 🔑 Authentication
+
+### Registration
+1. Go to the registration page
+2. Fill in all required fields
+3. Click "Register"
+
+### Login
+1. Go to the login page
+2. Enter your username and password
+3. Click "Login"
+
+## 🔧 Troubleshooting
+
+### Registration Fails
+If you're getting "Registration failed" errors:
+
+1. **Check required fields**: Ensure all required fields are filled
+2. **Password requirements**:
+   - At least 8 characters
+   - Can't be entirely numeric
+   - Can't be too similar to username/email
+3. **Email format**: Ensure email is in valid format (user@example.com)
+4. **Username availability**: The username might already be taken
+5. **Check server logs** for detailed error messages
+
+### Login Issues
+If you can't log in:
+
+1. **Verify credentials**: Double-check username and password
+2. **Account activation**: Ensure your account is active
+3. **Server running**: Make sure the backend server is running
+4. **Check console errors**: Look for errors in browser's developer console (F12)
+
+### Common Fixes
+
+1. **Clear browser cache** if you're experiencing unexpected behavior
+2. **Verify CORS settings** if getting CORS errors:
+   - Ensure backend's `CORS_ALLOWED_ORIGINS` includes `http://localhost:3000`
+   - Restart backend after making changes
+
+3. **Database issues**:
+   ```bash
+   # Delete database and migrations
+   rm -f db.sqlite3
+   find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+   find . -path "*/migrations/*.pyc" -delete
+   
+   # Recreate database
+   python manage.py makemigrations
+   python manage.py migrate
+   python manage.py createsuperuser
+   ```
+
+## 🖥️ Development
+
+### Backend
+- **Admin Interface**: `http://localhost:8000/admin`
+- **API Root**: `http://localhost:8000/api/`
+- **API Documentation**: `http://localhost:8000/api/docs/`
+
+### Frontend
+- **Development Server**: `http://localhost:3000`
+- **Hot Reloading**: Enabled by default
+
+## 📦 Dependencies
+
+### Backend
+- Django 5.2.7
+- Django REST Framework
+- SQLite (default) or MySQL
+- django-cors-headers
+- python-dotenv
+
+### Frontend
+- React 18
+- TypeScript
+- Tailwind CSS
+- React Router
+- Axios
    ```bash
    cd ../frontend
    ```
